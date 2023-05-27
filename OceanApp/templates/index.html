@@ -1,0 +1,763 @@
+{% extends "base.html" %}
+{% load static  %}
+
+
+   {% block title %} Ocean Blog {% endblock %}
+
+    {% block content %} 
+    <div class="ocean">
+      <!-- header -->
+      <header class="header">
+        <a href="/home" class="header__logo">
+          <img src="{% static 'img_video/logo-color.png' %}" alt="logo">
+        </a>
+        <div class="righSide">
+          <!-- <div class="btn nicationBnt">
+                    <ion-icon name="notifications-off-outline"></ion-icon>
+                </div> -->
+          <div class="btn user_account">
+            <a
+              rel="noopener"
+              href="/login"
+              >
+              <ion-icon class="iconn" name="person-outline"></ion-icon>
+            </a>
+          </div>
+          <div class="btn dayNight">
+            <ion-icon class="iconn" name="moon-outline"></ion-icon>
+            <ion-icon class="iconn" name="sunny-outline"></ion-icon>
+          </div>
+          <div class="btn menuToggle">
+            {% comment %} <ion-icon class="iconn" name="menu-outline"></ion-icon> {% endcomment %}
+            <div class="avatar iconn">
+              <img src='data:image/png;base64,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' alt="avt">
+              <p></p>
+            </div>
+           {% comment %} <ion-icon class="iconn" name="person-outline"></ion-icon> {% endcomment %}
+            <ion-icon class="iconn" name="close-outline"></ion-icon>
+          </div>
+        </div>
+        <!-- sidebar navigation -->
+
+          
+
+          <div class="navigation">
+            
+            {% if username %}
+            <!-- contact us -->
+            <div id="contact-us-wrap" class="contact-us-wrap create-blog">
+              <div class="grid">
+                <div class="row">
+                  <div class="col l-12 m-12">
+
+                    <form action="/profile" method="POST" enctype="multipart/form-data" class="contact-us-sub contact-us">
+                       {% csrf_token %}
+                      <div class="contact-us__container">
+                        <div class="contact-info">
+
+                          <div  class="avatar avatar-profile iconn">
+                            <img  src='' alt="avt">
+                            <p></p>
+                          </div>
+
+                          <label class="label-thumb" for="image-input">
+                            <i class="far fa-image">  </i>  Change Avatar
+                          </label>
+                          <input
+                            type="file"
+                            required
+                            hidden
+                            name="avatar"
+                            id="image-input"
+                          />
+                          <img id="preview-image"  class="preview-image" src="" alt="" />
+                        </div>
+                        <div class="contact-form">
+                          <h2>edit your profile</h2>
+                          <div class="form-box">
+                            <div class="input-box w50">
+                              <input id="first-name" type="text" name="username" required />
+                              <span>username</span>
+                              <div class="form-message"></div>
+                            </div>
+                            <div class="input-box w50">
+                              <input id="last-name" type="text" name="email" required />
+                              <span>email</span>
+                              <div class="form-message"></div>
+                            </div>
+
+                            <div class="input-box w50">
+                              <input id="last-name" type="text" name="password" required />
+                              <span>password</span>
+                              <div class="form-message"></div>
+                            </div>
+
+                            <div class="input-box w50">
+                              <label for="gender">Gender:</label>
+                              <select id="gender" name="gender" class="form-control">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                              </select>
+                              <div class="form-message"></div>
+                            </div>
+                          
+                          
+                            
+                            <div class="input-box w100">
+                              <button class="form-submit">Send</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
+            <ul>
+              <li><a href="/profile">Profile</a></li>
+              <li><a href="#slider-wrap">Promotion</a></li>
+              <li><a href="#list-tour">Packages</a></li>
+              <li><a href="#top-review">reviews</a></li>
+              <li><a href="/logout">Logout</a></li>
+            </ul>
+
+          </div>
+
+        
+      </header>
+
+
+      <section class="header-video">
+        <video
+          src="{% static 'img_video/video.mp4' %}"
+          autoplay
+          loop
+          muted
+          type="mp4"
+        ></video>
+        <img src=" {% static 'img_video/mask.jpg' %} " alt="img" />
+        <h2>ocean</h2>
+        <ul class="social-link">
+          <li>
+            <a href="https://www.facebook.com/" target="blank"
+              ><ion-icon name="logo-facebook"></ion-icon
+            ></a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/" target="blank"
+              ><ion-icon name="logo-instagram"></ion-icon
+            ></a>
+          </li>
+          <li>
+            <a href="#" target="blank"
+              ><ion-icon name="logo-twitter"></ion-icon
+            ></a>
+          </li>
+        </ul>
+        <audio
+          class="audio"
+          src="{%static 'img_video/giobien.mp3' %}" 
+          autoplay
+          loop
+          type="mp3"
+        ></audio>
+      </section> 
+
+      <!-- search -->
+      <div class="search-container">
+        <ul class="search__list-filter hide-on-mobile">
+          <li class="search__item-filter active">
+            <img
+              src="https://tranhoangkhang1212.github.io/travelix/assets/images/hotel.webp"
+              alt=""
+            />
+            <a href="/home">home</a>
+          </li>
+          <li class="search__item-filter">
+            <img
+              src="https://tranhoangkhang1212.github.io/travelix/assets/images/car.webp"
+              alt=""
+            />
+            <a href="/blog">BLogs</a>
+          </li>
+          <li class="search__item-filter">
+            <img
+              src="https://tranhoangkhang1212.github.io/travelix/assets/images/fly.webp"
+              alt=""
+            />
+            <a href="/create/blog">Create blog</a>
+          </li>
+          <li class="search__item-filter">
+
+            <img
+              src="	https://tranhoangkhang1212.github.io/travelix/assets/images/trip.webp"
+              alt=""
+            />
+            <a href="/me/blog">My Blogs</a>
+          </li>
+          <li class="search__item-filter">
+            <img
+              src="https://tranhoangkhang1212.github.io/travelix/assets/images/cruises.webp"
+              alt=""
+            />
+            <a href="/contact">contact</a>
+          </li>
+          {% comment %} <li class="search__item-filter">
+            <img
+              src="	https://tranhoangkhang1212.github.io/travelix/assets/images/activities.webp"
+              alt=""
+            />
+            <a href="#">activities</a>
+          </li> {% endcomment %}
+        </ul>
+
+        <div class="grid wide">
+          <div class="row search-form-wrap">
+            <div class="col l-4 m-6 c-12">
+              <div class="search-form">
+                <h2>destination</h2>
+                <input type="text" placeholder="Srearch..." />
+              </div>
+            </div>
+            <div class="col l-2 m-6 c-12">
+              <div class="search-form">
+                <h2>check in</h2>
+                <input type="text" placeholder="dd/mm/yyyy" />
+              </div>
+            </div>
+            <div class="col l-2 m-6 c-12">
+              <div class="search-form">
+                <h2>check out</h2>
+                <input type="text" placeholder="dd/mm/yyyy" />
+              </div>
+            </div>
+            <div class="col l-1 m-3 c-6">
+              <div class="search-form">
+                <label for="cars">adults</label>
+                <select id="cars">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+              </div>
+            </div>
+            <div class="col l-1 m-3 c-6">
+              <div class="search-form">
+                <label for="cars">children</label>
+                <select id="cars">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+              </div>
+            </div>
+            <div class="col l-2 m-4 c-6">
+              <div class="search-form">
+                <button>Search ...</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      
+
+      <!-- list tour -->
+      <div id="list-tour" class="list-tour">
+        <div class="tour-title title-form">
+          <h3>Choose your</h3>
+          <h2>wonderful holiday</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+            commodo ligula eget dolor lorem ipsum.
+          </p>
+        </div>
+
+        <div class="grid">
+          <div class="row render-tours sm-gutter mobile-tablet-lim-width">
+            
+            <!-- <div class="tour-content">
+                        <div class="tour-item">
+                            <img src="https://tranhoangkhang1212.github.io/travelix/assets/images/bg_header.webp" alt="img">
+                            <h2>Nha Trang</h2>
+                            <p>Enjoy a wonderful vacation in resort paradise</p>
+                            <div class="Tour-item__price">from 100$</div>
+                            <ul>
+                                <li>
+                                    <i class="fas fa-star"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star"></i>
+                                </li>
+                                <li>
+                                    <i class="far fa-star"></i>
+                                </li>
+                            </ul>
+                            <div class="tour-item__booknow-btn">Book Now</div>
+                        </div>
+                    </div> -->
+          </div>
+        </div>
+      </div>
+
+
+      
+
+
+      <!--slider -->
+      <div id="slider-wrap" class="slider-wrap">
+        <div class="tour-title title-form zoom-mb">
+          <h3>promotionr</h3>
+          <h2>Special tour</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+            commodo ligula eget dolor lorem ipsum.
+          </p>
+        </div>
+        <div class="grid wide">
+          <div class="row countdown-container">
+            <!-- countdown -->
+            <div class="col l-3 c-12 counter-wrap">
+              <div class="sale-time">
+                <div class="sale-time__title hide-on-mobile-tablet">
+                  <p class="sale-time__sub-title">LAST MINUTE !</p>
+                  <h2 class="sale-time__main-title">Summer sale</h2>
+                </div>
+                <div class="sale-time__countdown">
+                  <div class="sale-time__days sale-time__form">
+                    <h2 class="sale-time__days__number">000</h2>
+                    <p class="sale-time__days__text">Days</p>
+                  </div>
+                  <div class="sale-time__hours sale-time__form">
+                    <h2 class="sale-time__hours__number">00</h2>
+                    <p class="sale-time__hours__text">hours</p>
+                  </div>
+                  <div class="sale-time__munites sale-time__form">
+                    <h2 class="sale-time__munites__number">00</h2>
+                    <p class="sale-time__munites__text">munites</p>
+                  </div>
+                  <div class="sale-time__seconds sale-time__form">
+                    <h2 class="sale-time__seconds__number">00</h2>
+                    <p class="sale-time__seconds__text">seconds</p>
+                  </div>
+                </div>
+                <button class="sale-time__btn hide-on-mobile-tablet">
+                  Check now
+                </button>
+              </div>
+            </div>
+            <!-- slider -->
+            <div class="col l-9 m-12 c-12">
+              <div class="slider">
+                <div class="slider__imgs">
+                  <div class="slider__img slider1">
+                    <div class="slider__img__text">
+                      <h3>welcome to</h3>
+                      <h2>Vinh Ha Long</h2>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing
+                        elit. Aenean commodo ligula eget dolor lorem ipsum.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="slider__img slider2">
+                    <div class="slider__img__text">
+                      <h3>welcome to</h3>
+                      <h2>Nha Trang</h2>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing
+                        elit. Aenean commodo ligula eget dolor lorem ipsum.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="slider__img slider3">
+                    <div class="slider__img__text">
+                      <h3>welcome to</h3>
+                      <h2>Da Nang</h2>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing
+                        elit. Aenean commodo ligula eget dolor lorem ipsum.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="slider__img slider4">
+                    <div class="slider__img__text">
+                      <h3>welcome to</h3>
+                      <h2>Phu Quoc</h2>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing
+                        elit. Aenean commodo ligula eget dolor lorem ipsum.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="slider__img slider5">
+                    <div class="slider__img__text">
+                      <h3>welcome to</h3>
+                      <h2>Vung Tau</h2>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing
+                        elit. Aenean commodo ligula eget dolor lorem ipsum.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-btn">
+                  <span onclick="btn_slide(1)"></span>
+                  <span onclick="btn_slide(2)"></span>
+                  <span onclick="btn_slide(3)"></span>
+                  <span onclick="btn_slide(4)"></span>
+                  <span onclick="btn_slide(5)"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      
+
+      <!-- service -->
+      {% comment %} <div class="service-wrap hi">
+        <div class="grid">
+          <div class="row">
+            <div class="col l-12 m-12 mr-mb-center">
+              <div class="service">
+                <div class="service-form service__destinations">
+                  <h2>00</h2>
+                  <p>Destinations</p>
+                </div>
+                <div class="service-form service__tour-pack">
+                  <h2>00</h2>
+                  <p>tour pack</p>
+                </div>
+                <div class="service-form service__cruises">
+                  <h2>00</h2>
+                  <p>cruises</p>
+                </div>
+                <div class="service-form service__hour-support">
+                  <h2>00</h2>
+                  <p>hour support</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> {% endcomment %}
+
+      <!-- top review -->
+      <div id="top-review" class="top-review">
+        <div class="tour-title title-form">
+          <h2>top reviews</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+            commodo ligula eget dolor lorem ipsum.
+          </p>
+        </div>
+        <div class="grid wide">
+          <div class="row height-top-review">
+            <div class="col l-9 m-8 c-12">
+              <div class="form-review">
+                <div class="row render-comments">
+                 
+                </div>
+              </div>
+            </div>
+
+            <div class="col l-3 m-4 c-12">
+              <div class="form-comment">
+                <div class="form-input__user">
+                  <input
+                    class="user__avatar"
+                    name="user__avatar"
+                    type="url"
+                    placeholder="URl image..."
+                  />
+                  <img
+                    src="https://i.pinimg.com/736x/bf/bc/5b/bfbc5b2181cedb6c68f357823c20f806.jpg"
+                    alt="img"
+                  />
+                  <div class="form-input__user__name">
+                    <input
+                      type="text"
+                      name="user__name"
+                      class="user__name"
+                      placeholder="Your name..."
+                    />
+                    <p></p>
+                  </div>
+                  <div class="form-input__user__title"></div>
+                  <div class="form-input__user__comment">
+                    <textarea
+                      class="user__comment"
+                      v-model="message"
+                      placeholder="Comment..."
+                    ></textarea>
+                  </div>
+                  <button class="form-submit" name="form-submit">Send</button>
+                  <button class="form-cancel" name="form-cancel">cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+ <!-- phần resort -->
+      <div class="grid wide">
+                <div class="tour-title title-form zoom-mb">
+          <h3>promotionr</h3>
+          <h2>Special tour</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+            commodo ligula eget dolor lorem ipsum.
+          </p>
+        </div>
+
+                <div class="row">
+
+                    <div class="col l-4 m-6 c-12">
+                        <div class="container-resort__city">
+                            <div class="star-favorite">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="container-resort__city-body">
+                                <div class="container-resort__city-img container-resort__city-img1"></div>
+                                <span class="container-resort__city-name">slovenia</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="col l-4 m-12 c-12 favourite-oder-tablet">
+                        <div class="container-resort__city container-resort__city--star">
+                            <div class="star-favorite">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="container-resort__city-body">
+                                <div class="container-resort__city-img container-resort__city-img2"></div>
+                                <span class="container-resort__city-name">france</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="col l-4 m-6 c-12">
+                        <div class="container-resort__city">
+                            <div class="star-favorite">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="container-resort__city-body">
+                                <div class="container-resort__city-img container-resort__city-img3"></div>
+                                <span class="container-resort__city-name">Switzerland</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+      
+
+      <!-- contact us -->
+      <div id="contact-us-wrap" class="contact-us-wrap">
+        <div class="tour-title title-form">
+          <h3>Choose your</h3>
+          <h2>Contact us</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+            commodo ligula eget dolor lorem ipsum.
+          </p>
+        </div>
+        <div class="grid">
+          <div class="row">
+            <div class="col l-12 m-12">
+              <div class="contact-us">
+                <div class="contact-us__container">
+                  <div class="contact-info">
+                    <h2 class="hide-on-mobile-tablet">Contact Info</h2>
+                    <ul class="info-list">
+                      <li>
+                        <span
+                        
+                          ><img src="{%static 'img_video/location.png' %}" alt="iconImg"
+                        /></span>
+                        <span
+                          >2912 MeadowBrook Road<br />
+                          Los Angeles, CA<br />
+                          90017</span
+                        >
+                      </li>
+
+                      <li>
+                        <span
+                          ><img src="{%static 'img_video/mail.png' %}" alt="iconImg"
+                        /></span>
+                        <span>cuong53612@donga.edu.vn</span>
+                      </li>
+
+                      <li>
+                        <span
+                          ><img src="{%static 'img_video/call.png' %}" alt="iconImg"
+                        /></span>
+                        <span>0916074130</span>
+                      </li>
+                    </ul>
+                    <ul class="social-list">
+                      <li>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="contact-form">
+                    <h2>Send a Message</h2>
+                    <div class="form-box">
+                      <div class="input-box w50">
+                        <input id="first-name" type="text" name="" required />
+                        <span>First Name</span>
+                        <div class="form-message"></div>
+                      </div>
+                      <div class="input-box w50">
+                        <input id="last-name" type="text" name="" required />
+                        <span>Last Name</span>
+                        <div class="form-message"></div>
+                      </div>
+                      <div class="input-box w50">
+                        <input
+                          id="email-address"
+                          type="email"
+                          name=""
+                          required
+                        />
+                        <span>Email Address</span>
+                        <div class="form-message"></div>
+                      </div>
+                      <div class="input-box w50">
+                        <input
+                          id="mobile-number"
+                          type="text"
+                          name=""
+                          required
+                        />
+                        <span>Mobile Number</span>
+                        <div class="form-message"></div>
+                      </div>
+                      <div class="input-box w100" id="mg-bottom">
+                        <textarea
+                          id="user-message"
+                          name=""
+                          id=""
+                          cols="30"
+                          rows="10"
+                          required
+                        ></textarea>
+                        <span>Write your message here...</span>
+                        <div class="form-message"></div>
+                      </div>
+                      <div class="input-box w100">
+                        <button class="form-submit">Send</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- footer -->
+      <footer class="footer-wrap">
+        <div class="grid wide">
+          <div class="row">
+            <div class="col l-4 m-6 c-12">
+              <div class="footer">
+                <div class="footer__logo">
+                  <img  src="{%static 'img_video/logo-color.png' %}"  alt="logo" />
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Curabitur ut diam et nibh condimentum venenatis eu ac
+                    magnasin. Quisque interdum est mauris, eget ullamcorper.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col l-4 m-6">
+              <div class="footer">
+                <div class="footer-form footer__connect">
+                  <h2>connect with us</h2>
+                  <p>SOCIAL MEDIA CHANNELS</p>
+                  <ul class="footer__social">
+                    <li>
+                      <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li>
+                      <a href="#"><i class="fab fa-instagram"></i></a>
+                    </li>
+                    <li>
+                      <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col l-4 m-12">
+              <div class="footer">
+                <div class="footer-form footer__subcribe">
+                  <h2>Newsletter</h2>
+                  <p>SIGN UP FOR SPECIAL OFFERS</p>
+                  <div class="footer__subcribe__input">
+                    <input type="email" placeholder="Email" />
+                    <button>subcribe</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <div class="footer_copyright">
+        <h2>© Copyright 2021 by Lưu Mạnh Cường</h2>
+      </div>
+    </div>
+
+    <script> 
+       
+    </script>
+
+<script src="{%static 'javascript/main.js' %}"></script>
+
+
+
+{% endblock %}
